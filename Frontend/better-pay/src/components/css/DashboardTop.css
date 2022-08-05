@@ -1,0 +1,13 @@
+.mainContentU {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.titleDashTop{
+  color: #171D24;
+  font-weight: bold;
+  font-size: 24pt;
+  padding-top: 25px;
+  text-align: left;
+}

@@ -1,0 +1,81 @@
+<html>
+<header>
+    <title>Test page</title>
+    <link rel="stylesheet" href="style.css">
+</header>
+<body>
+    <h1><img src="icon.svg" alt="logo">BetterPay Chat Room</h1>
+    <div><span>Last update: </span><span id="time-container"></span></div>
+    <button onclick="getUsers()">Get user data</button>
+    <div id="result-container"></div>
+    <label for="data">Message:</label>
+    <input type="text" id="data" name="data"><br><br>
+    <a class = "button">Submit</a>
+</body>
+<script>
+
+     let port = location.port;
+     console.log(port);
+
+     let userMessage = function(message) {
+        const xml = new XMLHttpRequest();
+        xml.onreadystatechange = function () {
+            if (xml.status == 200) {
+                console.log(xml.response);
+            }
+        };
+        xml.open("POST", "http://localhost:6969/users");
+        xml.setRequestHeader('Access-Control-Allow-Headers', '*');
+        xml.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded;charset=UTF-8');
+        xml.send("message=" + message + '&' + "port=" + port);
+    }
+
+    document.querySelector(".button").addEventListener("click",(e) => {
+        e.preventDefault();
+        const inputText = document.getElementById("data").value;
+        console.log(inputText);
+        userMessage(inputText);
+    });
+
+    var xhr = null;
+    getXmlHttpRequestObject = function () {
+        if (!xhr) {
+            // Create a new XMLHttpRequest object
+            xhr = new XMLHttpRequest();
+        }
+        return xhr;
+    };
+
+    function dataCallback() {
+        // Check response is ready or not
+        if (xhr.readyState == 4 && xhr.status == 200) {
+            console.log("User data received!");
+            getDate();
+            dataDiv = document.getElementById('result-container');
+            // Set current data text
+            dataDiv.innerHTML = xhr.responseText;
+        }
+    }
+
+    function getUsers() {
+        console.log("Get users...");
+        xhr = getXmlHttpRequestObject();
+        xhr.onreadystatechange = dataCallback;
+        // asynchronous requests
+        xhr.open("GET", "http://localhost:6969/users", true);
+        // Send the request over the network
+        xhr.send(null);
+    }
+
+    function getDate() {
+        date = new Date().toString();
+        document.getElementById('time-container').textContent
+            = date;
+    }
+
+    (function () {
+        getDate();
+    })();
+
+</script>
+</html>

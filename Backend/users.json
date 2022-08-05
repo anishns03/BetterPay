@@ -1,0 +1,16 @@
+{
+    "log": [
+        {
+            "username": "Borrower",
+            "message": "I need 200$"
+        },
+        {
+            "username": "Lender",
+            "message": "Okay, I can do that for 5% APR"
+        },
+        {
+            "username": "Borrower",
+            "message": "Okay deal"
+        }
+    ]
+}
